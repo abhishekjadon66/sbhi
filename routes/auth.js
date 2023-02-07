@@ -46,7 +46,6 @@ router.post(
         },
       };
       const auhtoken = jwt.sign(data, JWT_SECRET);
-      console.log(jwtData);
       // .then((user) => res.json(user))
       // .catch((err) => {
       //   console.log(err);
@@ -55,7 +54,8 @@ router.post(
       //     message: err.message,
       //   });
       // });
-      res.json(auhtoken);
+      success = true;
+      res.json({ success, auhtoken });
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Some Error occured");
@@ -72,6 +72,7 @@ router.post(
     body("password", "Passwore cannot be blank").exists(),
   ],
   async (req, res) => {
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -80,15 +81,18 @@ router.post(
     try {
       let user = await User.findOne({ email });
       if (!user) {
+        success = false;
         return res
           .status(400)
           .json({ error: "Please try to login with correct credentials" });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
-        return res
-          .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+        success = false;
+        return res.status(400).json({
+          success,
+          error: "Please try to login with correct credentials",
+        });
       }
       const data = {
         user: {

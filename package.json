@@ -1,7 +1,7 @@
 {
-  "name": "mernweb-backend",
+  "name": "cognicode-backed",
   "version": "1.0.0",
-  "description": "mernweb - Your notebook on the cloud",
+  "description": "Cognicode - your database on the cloud",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
     "express": "^4.18.2",
     "express-validator": "^6.14.3",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.9.0"
+    "mongoose": "^6.9.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
